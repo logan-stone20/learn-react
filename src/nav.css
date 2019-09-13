@@ -1,0 +1,23 @@
+.navbar {
+	background-color: #1e4482;
+	height: 5vh;
+	min-height: 
+}
+
+nav {
+	height: 100%;
+}
+
+nav a {
+	position: relative;
+	line-height: 50px;
+	margin-left: 30%;
+	color: #ffffff;
+	text-decoration: none;
+	font-size: 1.5em;
+}
+
+a:hover {
+	background-color: #7c818a;
+}
+

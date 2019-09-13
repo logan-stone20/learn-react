@@ -1,0 +1,25 @@
+body {
+	margin: 0;
+	width: 100%;
+	box-sizing: border-box;
+}
+.content {
+	display: flex;
+	height: 95vh;
+	flex: auto;
+	flex-direction: row;
+	text-align: center;
+
+}
+
+.sidebar {
+	background-color: #4a4d52;
+	height: 100%;
+	width: 30%;
+}
+
+.main-column {
+	background-color: #737880;
+	height: 100%;
+	width: 70%;
+}

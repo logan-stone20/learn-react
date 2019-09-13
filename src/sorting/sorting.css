@@ -1,0 +1,25 @@
+.sorting-pane {
+	width: 60%;
+	background-color: #2f7e82;
+}
+
+.sort-select {
+	width: 40%;
+}
+
+.sort-select h1 {
+	padding: 15px;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+}
+
+select {
+	margin-top: 20%;
+}
+
+input {
+	width: 100px;
+}
