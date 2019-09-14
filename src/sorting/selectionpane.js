@@ -5,14 +5,16 @@ class SelectionPane extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {sort: ""};
-		this.startSorting = this.startSorting.bind(this);
+		this.afterSubmit = this.afterSubmit.bind(this);
 	}
 
-	sortChangeHandler = (event) => {
-		this.setState({sort: event.target.value});
+	handleSortChange(e) {
+		this.setState({sort: e.target.value});
 	}
 
-	startSorting(event) {
+	afterSubmit = (e) => {
+		e.preventDefault();
+		this.props.updateSort(this.state.sort);
 	}
 
 
@@ -21,13 +23,15 @@ class SelectionPane extends React.Component {
 			<div className="sort-select">
 				<h1>Choose a sorting algorithm from the dropdown menu and press start</h1>
 				<div className="form">
-					<form>
-						<select onSubmit= {this.startSorting}>
+					<form onSubmit= {e => this.afterSubmit(e)}>
+						<select onChange={e => this.handleSortChange(e)}>
+							<option value="">Select Algorithm</option>
 							<option value="selection">Selection Sort</option>
 							<option value="bubble">Bubble Sort</option>
 						</select>
 						<input type="submit" value="Start Sorting!"/>
 					</form>
+					<button id="stop" onClick={this.props.stopLoop}> Stop Algorithm </button>
 				</div>
 			</div>
 		);
