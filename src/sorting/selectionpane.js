@@ -13,11 +13,7 @@ class SelectionPane extends React.Component {
 
 	afterSubmit = (e) => {
 		e.preventDefault();
-		console.log("yee")
-		this.setState({
-			sort: document.getElementById("sort-dropdown").value,
-			numberOfItems: parseInt(document.getElementById("number-of-items").value),
-		});
+		
 		this.props.updateSort(document.getElementById("sort-dropdown").value, parseInt(document.getElementById("number-of-items").value));
 	}
 
@@ -35,8 +31,17 @@ class SelectionPane extends React.Component {
 						</select>
 						<label>
 							Number of items: 
-							<input id="number-of-items" type="number" min="20" max="200" required/>
+							<input onChange={e => function (e) {e.preventDefault()} } id="number-of-items" type="number" min="20" max="200" required/>
 						</label>
+						<select id="sort-speed" required>
+							<option value="">Select fps</option>
+							<option value="1">1 fps</option>
+							<option value="5">5 fps</option>
+							<option value="10">10 fps</option>
+							<option value="20">20 fps</option>
+							<option value="40">40 fps</option>
+							<option value="60">60 fps</option>
+						</select>
 						<input type="submit" value="Start Sorting!"/>
 					</form>
 				</div>
