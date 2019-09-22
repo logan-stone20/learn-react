@@ -1,23 +1,25 @@
 import 'react-p5-wrapper';
 
 let width = 5;
-let canvasWidth = 680;
+let canvasWidth = 850;
 let canvasHeight = 600;
-let rectHeight = 2;
+let rectHeight = 2.3;
 let ar;
 let current = 0;
-let arLength;
+let temp;
 let sorted = false;
 let counter = 0;
 let offset = canvasWidth/8;
+let sortType = document.getElementById('sort-dropdown');
 let stopLoop = false;
+let numberOfItems = 200;
 
 function bubbleSort(p, ar) {
 	p.fill(0);
 	sorted = true;
 	for (let i = 1; i < ar.length; i++) {
 		if (ar[i] < ar[i - 1]) {
-			let temp = ar[i];
+			temp = ar[i];
 			ar[i] = ar[i-1];
 			ar[i-1] = temp;
 			current = i;
@@ -26,15 +28,34 @@ function bubbleSort(p, ar) {
 	}
 }
 
-function makeArray() {
-	let ar = new Array(canvasWidth/4);
+function selectionSort(p, ar) {
+	if (!sorted) {
+		p.fill(0);
+		let minIndex = current;
+		sorted = true;
+		for (let i = current + 1; i < ar.length; i++) {
+			if (ar[i] < ar[minIndex]) {
+				minIndex = i;
+				sorted = false;
+			}
+		}
+		temp = ar[current];
+		ar[current] = ar[minIndex];
+		ar[minIndex] = temp;
+		current++
+	}
+}
+
+
+function makeArray(num) {
+	let ar = new Array(num);
 	for (let i = 0; i < ar.length; i++) {
 		ar[i] = Math.floor(Math.random() * 200);
 	}
 	return ar;
 }
 
-function redStreak() {
+function redStreak(p) {
 	counter++;
 }
 
@@ -48,23 +69,20 @@ function redStreak() {
 function sketch (p) {
 
 	p.setup = () => {
-		var sortCanvas = p.createCanvas(canvasWidth, canvasHeight);
+		let sortCanvas = p.createCanvas(canvasWidth, canvasHeight);
 		sortCanvas.parent("sort-window");
-		ar = makeArray();
-		p.frameRate(30);
+		ar = makeArray(document.getElementById("number-of-items").value);
+		p.frameRate(60);
 	}
 
 	p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
-        if (props.stopLoop) {
-            stopLoop = props.stopLoop;
-        }
+				numberOfItems = props.numberOfItems;
+				current = 0;
+				sortType = document.getElementById('sort-dropdown');
+        ar = makeArray(parseInt(document.getElementById("number-of-items").value));
     }
 
 	p.draw = () => {
-
-		if (stopLoop) {
-			p.noLoop();
-		}
 		p.background('#285c4d');
 		for (let i = 0; i < ar.length; i++) {
 			if (i === current) {
@@ -72,9 +90,15 @@ function sketch (p) {
 			} else {
 				p.fill(255);
 			}
-			p.rect(offset + i*3, canvasHeight - ar[i] * rectHeight, width, ar[i] * rectHeight );
+			p.rect(i*4, canvasHeight - ar[i] * rectHeight, width, ar[i] * rectHeight );
 		}
-		bubbleSort(p, ar);
+		if (sortType != null) {
+			if (sortType.value === "bubble") {
+				bubbleSort(p, ar);
+			} else if (sortType.value === "selection") {
+				selectionSort(p, ar);
+			}
+		}
 		if (sorted) {
 			for (let i = 0; i < ar.length; i++) {
 				if (i === counter) {
@@ -82,9 +106,10 @@ function sketch (p) {
 				} else {
 					p.fill(255);
 				}	
-				p.rect(offset + i*3, canvasHeight - ar[i] * rectHeight, width, ar[i] * rectHeight );
+				p.rect(i*4, canvasHeight - ar[i] * rectHeight, width, ar[i] * rectHeight );
 			}
-		redStreak();
+			redStreak(p);
+			current = 0;
 		}
 
 	}

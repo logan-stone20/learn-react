@@ -10,37 +10,28 @@ class Sorting extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			sortInProgress: false,
 			stopLoop: false,
 			sortType: '',
+			numberOfItems: 200,
 		};
 
-		this.startSort = this.startSort.bind(this);
 		this.updateSort = this.updateSort.bind(this);
-		this.stopSort = this.stopSort.bind(this);
+
 		this.stopLoop = this.stopLoop.bind(this);
 	}
 
-	updateSort(sortType) {;
-		if (!this.state.sortInProgress) {
-			this.setState({sortType: sortType})
-			this.startSort();
-		}
+	updateSort(sortType, num) {;
+		this.setState({
+			sortType: sortType,
+			numberOfItems: num,
+		});
 	}
 
 	stopLoop() {
 		this.setState({stopLoop: !this.state.stopLoop})
-		console.log(this.state)
-		document.getElementById("stop").innerHTML = this.state.stopLoop ? "Stop Loop" : "Start Loop"
+		document.getElementById("stop").innerHTML = this.state.stopLoop ? "Stop Sort" : "Start Sort"
 	}
 
-	startSort() {
-		this.setState({sortInProgress: true});
-	}
-
-	stopSort() {
-		this.setState({sortInProgress: false });
-	}
 
 	render() {
 		return (
@@ -48,7 +39,7 @@ class Sorting extends React.Component {
 				<NavBar />
 				<div className = "content">
 					<SelectionPane startSort = { this.startSort } stopLoop = {this.stopLoop} updateSort={this.updateSort}/> 
-					<SortingPane sortType={ this.state.sortType } stopLoop = {this.state.stopLoop} stopSort={this.stopSort}/>
+					<SortingPane sortType={ this.state.sortType } numberOfItems = {this.state.numberOfItems} startSort = { this.startSort } stopLoop = {this.state.stopLoop} stopSort={this.stopSort}/>
 				</div>
 			</div>
 		);

@@ -10,7 +10,7 @@ class SortingPane extends React.Component {
 				<div className = "sorting-pane">
 					<h1> {this.props.sortType + " sort"} </h1>
 					<div id="sort-window">
-						<P5Wrapper sketch={sketch} stopSort = {this.props.stopSort} stopLoop = {this.props.stopLoop} />
+						<P5Wrapper sketch={sketch} stopSort = {this.props.stopSort} numberOfItems = {this.props.numberOfItems} stopLoop = {this.props.stopLoop} />
 					</div>
 				</div>
 			);
